@@ -132,12 +132,12 @@ class Atester(wx.Frame):
             pathname = fileDialog.GetPath()
             try:
                 with open(pathname, 'r') as file:
-                    conf=file.readlines()
+                    conf=file.readlines(1024)
                     self.host=conf[0].strip()
                     self.req="".join(conf[1:-1])
                     self.req=self.req.lstrip()
-                    self.tc.write(self.host)
-                    self.tc2.write(self.req)
+                    self.tc.SetValue(self.host)
+                    self.tc2.SetValue(self.req)
             except IOError:
                 wx.MessageBox("An error occured during reading a file", 'Error', wx.OK | wx.ICON_ERROR)
     def SaveFile(self,e):
@@ -147,7 +147,7 @@ class Atester(wx.Frame):
             pathname = fileDialog.GetPath()
             try:
                 with open(pathname, 'w') as file:
-                    file.write(self.host+"\r\n"+self.req+"\r\n")
+                    file.write(self.host+"\r\n"+self.req)
                     file.close()
             except IOError:
                 wx.MessageBox("An error occured during saving a file", 'Error', wx.OK | wx.ICON_ERROR)
