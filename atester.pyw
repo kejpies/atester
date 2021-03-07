@@ -147,7 +147,7 @@ class Atester(wx.Frame):
             pathname = fileDialog.GetPath()
             try:
                 with open(pathname, 'w') as file:
-                    file.write(self.host+"\r\n"+self.req)
+                    file.write(self.host+"\r\n"+self.req+"\r\n")
                     file.close()
             except IOError:
                 wx.MessageBox("An error occured during saving a file", 'Error', wx.OK | wx.ICON_ERROR)
