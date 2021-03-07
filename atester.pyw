@@ -77,6 +77,8 @@ class Atester(wx.Frame):
 
         hbox3 = wx.BoxSizer(wx.HORIZONTAL)
         btn1 = wx.Button(panel, label='Send', size=(70, 30))
+        self.cbssl = wx.CheckBox(panel, label = 'SSL?')
+        hbox3.Add(self.cbssl)
         hbox3.Add(btn1)
         vbox.Add(hbox3, flag=wx.ALIGN_RIGHT|wx.RIGHT|wx.BOTTOM, border=10)
 
@@ -121,7 +123,7 @@ class Atester(wx.Frame):
         print(self.req)
         __port=int(self.host.split("|")[1].strip())
         __host=self.host.split("|")[0].strip()
-        self.tc3.SetValue(Sender.Send(__host,__port,self.req+"\r\n\r\n").decode("utf-8"))
+        self.tc3.SetValue(Sender.Send(__host,__port,self.req+"\r\n\r\n",self.cbssl.GetValue()).decode("utf-8"))
 
     def OpenFile(self,e):
         with wx.FileDialog(self, "Open configuration file", wildcard="Atester files (*.at)|*.at",style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:

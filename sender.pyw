@@ -16,13 +16,27 @@
 # sender.pyw
 
 class Sender():
-    def Send(_host, _port, _request):
+    def Send(_host, _port, _request, __ssl):
         import socket
+        data=""
         host = _host
         port = _port
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((host, port))
-        s.sendall(_request.encode())
-        data = s.recv(8192)
-        s.close()
+        if not __ssl:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.settimeout(10)
+            s.connect((host, port))
+            s.sendall(_request.encode())
+            data = s.recv(8192)
+            s.close()
+        else:
+            import ssl
+            ssl_context=ssl.create_default_context()
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            ws=ssl.wrap_socket(s,ssl_version=ssl.PROTOCOL_TLS,ciphers="AES256-SHA")
+            ws.settimeout(10)
+            ws.connect((host, port))
+            ws.sendall(_request.encode())
+            data = ws.recv(8192)
+            ws.close()
+
         return data
