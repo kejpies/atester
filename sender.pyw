@@ -32,7 +32,7 @@ class Sender():
             import ssl
             ssl_context=ssl.create_default_context()
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            ws=ssl.wrap_socket(s,ssl_version=ssl.PROTOCOL_TLS,ciphers="AES256-SHA")
+            ws=ssl.wrap_socket(s,ssl_version=ssl.PROTOCOL_SSLv23,ciphers="AES256-SHA")
             ws.settimeout(10)
             ws.connect((host, port))
             ws.sendall(_request.encode())
